@@ -9,6 +9,7 @@ export default function QuizReview() {
   const { idQuiz } = useParams();
   const navigate = useNavigate();
   const { answers, questions } = useQuiz();
+
   const [resumo, setResumo] = useState([]);
   const [mostrarPontuacao, setMostrarPontuacao] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -28,6 +29,7 @@ export default function QuizReview() {
         respostaUsuario: respostaSelecionada?.afirmation || "Não respondida",
         correta: respostaCorreta?.afirmation || "Indefinida",
         corretaBool: acertou,
+        index: questions.findIndex(quest => quest.id === q.id)
       };
     });
     setResumo(resumoMontado);
@@ -38,9 +40,7 @@ export default function QuizReview() {
     return `
       <div style="font-family: Arial, sans-serif;">
         <h2 style="color: #4F46E5">Resumo do seu Quiz</h2>
-        <p>Você acertou <strong>${score}</strong> de <strong>${
-      questions.length
-    }</strong> perguntas.</p>
+        <p>Você acertou <strong>${score}</strong> de <strong>${questions.length}</strong> perguntas.</p>
         <hr/>
         <ol style="padding-left: 20px;">
           ${resumo
@@ -48,14 +48,12 @@ export default function QuizReview() {
               (item, index) => `
             <li style="margin-bottom: 12px;">
               <p><strong>${index + 1}. ${item.pergunta}</strong></p>
-              <p style="margin: 0;">Sua resposta: <span style="color: #1E40AF">${
-                item.respostaUsuario
-              }</span></p>
+              <p style="margin: 0;">Sua resposta: <span style="color: #1E40AF">${item.respostaUsuario}</span></p>
               ${
                 item.corretaBool
                   ? '<p style="margin: 0; color: green;">✔️ Correta</p>'
                   : `<p style="margin: 0; color: red;">❌ Errada</p>
-                 <p style="margin: 0;">Resposta correta: <strong>${item.correta}</strong></p>`
+                     <p style="margin: 0;">Resposta correta: <strong>${item.correta}</strong></p>`
               }
             </li>
           `
@@ -69,6 +67,10 @@ export default function QuizReview() {
 
   const handleConfirmar = () => {
     setMostrarPontuacao(true);
+  };
+
+  const handleEditar = (index) => {
+    navigate(`/quiz/${idQuiz}/execucao?pergunta=${index}`);
   };
 
   const handleSubmitFinal = async () => {
@@ -120,9 +122,17 @@ export default function QuizReview() {
                   : "bg-gray-50 border-gray-300"
               }`}
             >
-              <h3 className="font-semibold mb-1">
-                {idx + 1}. {item.pergunta}
-              </h3>
+              <div className="flex justify-between items-center">
+                <h3 className="font-semibold mb-1">
+                  {idx + 1}. {item.pergunta}
+                </h3>
+                <button
+                  onClick={() => handleEditar(item.index)}
+                  className="text-sm bg-yellow-500 text-white px-2 py-1 rounded hover:bg-yellow-600"
+                >
+                  Editar
+                </button>
+              </div>
               <p>
                 <strong>Sua resposta:</strong> {item.respostaUsuario}
               </p>
@@ -135,7 +145,7 @@ export default function QuizReview() {
           ))}
         </div>
 
-        <div className="text-center mt-8">
+        <div className="text-center mt-8 space-x-4">
           {!mostrarPontuacao ? (
             <button
               onClick={handleConfirmar}
