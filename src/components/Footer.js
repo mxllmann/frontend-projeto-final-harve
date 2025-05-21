@@ -11,7 +11,7 @@ export default function Footer() {
 
         <div className="flex gap-6 text-2xl">
           <a
-            href="https://github.com/seu-usuario"
+            href="https://github.com/mxllmann"
             target="_blank"
             rel="noopener noreferrer"
             className="hover:text-indigo-300 transition"
@@ -19,7 +19,7 @@ export default function Footer() {
             <i className="fab fa-github"></i>
           </a>
           <a
-            href="https://linkedin.com/in/seu-usuario"
+            href="https://linkedin.com/in/arthurmallmann"
             target="_blank"
             rel="noopener noreferrer"
             className="hover:text-indigo-300 transition"
@@ -27,7 +27,7 @@ export default function Footer() {
             <i className="fab fa-linkedin"></i>
           </a>
           <a
-            href="mailto:contato@quizai.com"
+            href="mailto:arthur@sirrus.com.br"
             className="hover:text-indigo-300 transition"
           >
             <i className="fas fa-envelope"></i>

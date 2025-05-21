@@ -3,6 +3,7 @@ import axios from "axios";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { API_BASE_URL } from '../config';
 import { useQuiz } from "../context/QuizContext";
+import { showSuccess, showError, showWarning } from '../utils/alert';
 
 export default function QuizDetails() {
   const { idQuiz } = useParams();
@@ -30,7 +31,7 @@ export default function QuizDetails() {
       navigate(`/quiz/${idQuiz}/execucao`);;
     } catch (err) {
       console.error(err);
-      alert("Erro ao iniciar o quiz.");
+      showError("Erro ao iniciar o quiz.");
     }
   };
 

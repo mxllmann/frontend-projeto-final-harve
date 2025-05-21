@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useQuiz } from "../context/QuizContext";
 import axios from "axios";
 import { API_BASE_URL } from "../config";
+import { showError, showSuccess } from "../utils/alert";
 
 export default function QuizReview() {
   const { idQuiz } = useParams();
@@ -26,8 +27,8 @@ export default function QuizReview() {
       if (acertou) scoreTemp++;
       return {
         pergunta: q.question,
-        respostaUsuario: respostaSelecionada?.afirmation || "Não respondida",
-        correta: respostaCorreta?.afirmation || "Indefinida",
+        respostaUsuario: respostaSelecionada?.affirmation || "Não respondida",
+        correta: respostaCorreta?.affirmation || "Indefinida",
         corretaBool: acertou,
         index: questions.findIndex(quest => quest.id === q.id)
       };
@@ -75,7 +76,7 @@ export default function QuizReview() {
 
   const handleSubmitFinal = async () => {
     const userId = localStorage.getItem("userId");
-    if (!userId) return alert("Usuário não autenticado");
+    if (!userId) return showError("Usuário não autenticado");
     setSubmitting(true);
     try {
       await axios.post(`${API_BASE_URL}/test`, {
@@ -89,11 +90,11 @@ export default function QuizReview() {
         html: gerarResumoHTML(),
       });
 
-      alert("Teste enviado com sucesso! Você receberá um e-mail com o resumo.");
+      showSuccess("Teste enviado com sucesso! Você receberá um e-mail com o resumo.");
       navigate("/");
     } catch (err) {
       console.error(err);
-      alert("Erro ao enviar o teste.");
+      showError("Erro ao enviar o teste.");
     } finally {
       setSubmitting(false);
     }
@@ -127,11 +128,32 @@ export default function QuizReview() {
                   {idx + 1}. {item.pergunta}
                 </h3>
                 <button
-                  onClick={() => handleEditar(item.index)}
-                  className="text-sm bg-yellow-500 text-white px-2 py-1 rounded hover:bg-yellow-600"
-                >
-                  Editar
-                </button>
+                onClick={() => handleEditar(item.index)}
+                className="
+                  inline-flex items-center
+                  text-sm font-medium
+                  text-indigo-600
+                  bg-indigo-100
+                  border border-indigo-200
+                  px-3 py-1.5
+                  rounded-full
+                  shadow-sm
+                  hover:bg-indigo-200
+                  transition-shadow
+                  "
+              >
+                {/* ícone de lápis inline (Heroicon Outline) */}
+                <svg xmlns="http://www.w3.org/2000/svg"
+                    className="h-4 w-4 mr-1"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round"
+                        d="M15.232 5.232l3.536 3.536M9 11l6-6m0 0l3 3m-3-3L9 11m0 0l-4 4v4h4l4-4" />
+                </svg>
+                Editar
+              </button>
               </div>
               <p>
                 <strong>Sua resposta:</strong> {item.respostaUsuario}

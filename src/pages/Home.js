@@ -30,7 +30,7 @@ export default function Home() {
           transition={{ duration: 1.2 }}
         >
           <h2 className="text-3xl font-bold text-gray-800 text-center mb-6">
-            Bem-vindo ao QuizAI
+            Bem-vindo ao Harve Quizzer
           </h2>
           <p className="text-gray-600 text-center mb-8">
             O QuizAI é a plataforma perfeita para testar e aprimorar seus conhecimentos em diversas áreas.
@@ -49,7 +49,7 @@ export default function Home() {
               <span className="text-5xl mb-2 ">🤖</span>
               <h3 className="text-xl font-semibold mb-1 text-gray-600">Tecnologia de Ponta</h3>
               <p className="text-gray-600">
-                IA e Machine Learning integradas para criar quizzes dinâmicos e inteligentes.
+                Node no backend para garantir sua segurança e privacidade.
               </p>
             </div>
             <div className="flex flex-col items-center text-center p-4">

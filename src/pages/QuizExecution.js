@@ -4,6 +4,7 @@ import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import axios from 'axios';
 import { API_BASE_URL } from '../config';
 import { useQuiz } from '../context/QuizContext';
+import { showError } from '../utils/alert';
 
 export default function QuizExecution() {
   const { idQuiz } = useParams();
@@ -38,7 +39,7 @@ export default function QuizExecution() {
           }
         } catch (err) {
           console.error(err);
-          alert("Erro ao carregar questões do quiz.");
+          showError("Erro ao carregar questões do quiz.");
         } finally {
           setLoading(false);
         }
@@ -88,7 +89,7 @@ export default function QuizExecution() {
                 className={`w-full text-left px-4 py-2 border rounded-lg transition-all
                 ${selected === item.id ? 'bg-indigo-500 text-white' : 'bg-gray-100 hover:bg-gray-200'}`}
               >
-                {item.afirmation}
+                {item.affirmation}
               </button>
             </li>
           ))}

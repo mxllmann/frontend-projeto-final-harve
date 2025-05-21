@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { API_BASE_URL } from "../config";
-import toast from 'react-hot-toast';
 import { motion } from 'framer-motion';
+import { showSuccess, showError, showWarning } from '../utils/alert'
 
 export default function Login({ setUsername }) {
   const [isLogin, setIsLogin] = useState(true);
@@ -42,14 +42,7 @@ export default function Login({ setUsername }) {
         };
 
     if (!isLogin && formData.password !== formData.confirmPassword) {
-      return toast('As senhas não conferem.', {
-        icon: '⚠️',
-        style: {
-          background: '#facc15',
-          color: '#1e293b',
-          fontWeight: '500',
-        },
-      });
+      return showWarning('As senhas não conferem!')
     }
 
     try {
@@ -79,14 +72,14 @@ export default function Login({ setUsername }) {
 
           navigate("/");
         } else {
-          alert(data.feedback);
+          showSuccess(data.feedback);
         }
       } else {
-        alert(data.feedback || "Erro no login/cadastro.");
+        showError(data.feedback || "Erro no login/cadastro.");
       }
     } catch (err) {
       console.error(err);
-      alert("Erro de conexão com o servidor.");
+      showError("Erro de conexão com o servidor.");
     }
   };
 
