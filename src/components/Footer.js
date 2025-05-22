@@ -5,7 +5,7 @@ export default function Footer() {
     <footer className="mt-20 bg-white bg-opacity-10 backdrop-blur-sm text-white py-8 px-4 rounded-t-2xl">
       <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
         <div className="text-center md:text-left">
-          <h3 className="text-xl font-semibold">QuizAI</h3>
+          <h3 className="text-xl font-semibold">Harve Quizzer</h3>
           <p className="text-sm text-gray-200">Aprimore seu conhecimento com inteligência.</p>
         </div>
 
